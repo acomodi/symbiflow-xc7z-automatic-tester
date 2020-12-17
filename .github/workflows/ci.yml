@@ -32,8 +32,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: xc7z-automatic-tester
-        release_name: Release xc7z-automatic-tester
+        tag_name: ${{ github.ref }}
+        release_name: Release xc7 automatic tester
         draft: false
         prerelease: false
 
