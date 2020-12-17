@@ -9,9 +9,7 @@ export PATH=${PWD}/gcc-arm-none-eabi-9-2019-q4-major/bin:$PATH
 rm gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2
 
 # Create artifacts directory
-mkdir -p artifacts/boot
-mkdir -p artifacts/root
-ARTIFACTS_DIR=${WORKDIR}/artifacts
+mkdir root boot
 
 # Build U-boot bootloader
 pushd u-boot-xlnx
@@ -20,7 +18,7 @@ export CROSS_COMPILE=arm-none-eabi-
 make zynq_zybo_z7_defconfig
 make -j`nproc`
 
-cp spl/boot.bin u-boot.img ${ARTIFACTS_DIR}/boot
+cp spl/boot.bin u-boot.img ${WORKDIR}/boot
 popd
 
 # Build Linux kernel
@@ -34,10 +32,10 @@ make -j`nproc` uImage
 make -j`nproc` dtbs
 make -j`nproc` modules
 
-cp arch/arm/boot/uImage ${ARTIFACTS_DIR}/boot
-cp arch/arm/boot/dts/zynq-zybo-z7.dtb ${ARTIFACTS_DIR}/boot/devicetree.dtb
-cp drivers/misc/symbiflow-tester.ko ${ARTIFACTS_DIR}/root
+cp arch/arm/boot/uImage ${WORKDIR}/boot
+cp arch/arm/boot/dts/zynq-zybo-z7.dtb ${WORKDIR}/boot/devicetree.dtb
+cp drivers/misc/symbiflow-tester.ko ${WORKDIR}/root
 popd
 
 # Adding required files to rootfs
-cp -a python/symbiflow_test.py devmemX zynq_bootloader ${ARTIFACTS_DIR}/root
+cp -a python/symbiflow_test.py devmemX zynq_bootloader ${WORKDIR}/root
